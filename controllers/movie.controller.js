@@ -2,9 +2,10 @@ import axios from "axios";
 import { fetchFromTMDB } from "../services/tmdb.service.js";
 
 export async function getTrendingMovie(req, res) {
+  const { num } = req.params;
   try {
     const data = await axios.get(
-      "https://phimapi.com/danh-sach/phim-moi-cap-nhat?page=1"
+      `https://phimapi.com/danh-sach/phim-moi-cap-nhat?page=${num}`
     );
 
     res.json({ success: true, content: data.data });
