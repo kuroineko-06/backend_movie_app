@@ -4,5 +4,5 @@ export const ENV_VARS = {
   PORT: 3000,
   JWT_SECRET: "hoilamdeogi",
   NODE_ENV: "development",
-  TMDB_API_KEY: process.env.TMDB_API_KEY,
+  TMDB_API_KEY: "hoilamdeogi",
 };
