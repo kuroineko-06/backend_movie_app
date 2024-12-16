@@ -1,12 +1,13 @@
+import axios from "axios";
 import { fetchFromTMDB } from "../services/tmdb.service.js";
 
 export async function getTrendingMovie(req, res) {
   try {
-    const data = await fetchFromTMDB(
+    const data = await axios.get(
       "https://phimapi.com/danh-sach/phim-moi-cap-nhat?page=1"
     );
-    const limited = data.results.slice(0, 5);
-    res.json({ success: true, content: limited });
+
+    res.json({ success: true, content: data.results });
   } catch (error) {
     res.status(500).json({ success: false, message: "Internal Server Error" });
   }
