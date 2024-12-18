@@ -8,7 +8,7 @@ export async function getTrendingMovie(req, res) {
       `https://phimapi.com/danh-sach/phim-moi-cap-nhat?page=${num}`
     );
 
-    res.json({ success: true, content: data.data });
+    res.json({ success: true, content: data.data["items"] });
   } catch (error) {
     res.status(500).json({ success: false, message: "Internal Server Error" });
   }
