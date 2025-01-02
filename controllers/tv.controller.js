@@ -17,12 +17,12 @@ export async function getTrendingTv(req, res) {
 export async function getPopularTv(req, res) {
   try {
     const data = await axios.get(
-      "https://phimapi.com/v1/api/danh-sach/tv-shows"
+      `https://phimapi.com/v1/api/danh-sach/tv-shows`
     );
 
     res.json({ success: true, content: data.data["items"] });
   } catch (error) {
-    res.status(500).json({ success: false, message: "Internal Server Error" });
+    res.status(500).json({ success: false, message: error });
   }
 }
 
