@@ -8,20 +8,47 @@ export async function getTrendingMovie(req, res) {
       `https://phimapi.com/danh-sach/phim-moi-cap-nhat?page=${num}`
     );
 
-    res.json({ success: true, content: data.data["items"] });
+    res.json({ success: true, content: data.data });
   } catch (error) {
     res.status(500).json({ success: false, message: "Internal Server Error" });
   }
 }
 
-export async function getNowPlayingMovies(req, res) {
+export async function getSingleMovie(req, res) {
+  const { num } = req.params;
   try {
-    const data = await fetchFromTMDB(
-      "https://api.themoviedb.org/3/movie/now_playing"
+    const data = await axios.get(
+      `https://phimapi.com/v1/api/danh-sach/phim-le?page=${num}`
     );
-    res.json({ success: true, content: data.results });
+
+    res.status(200).json({ content: data.data.data });
   } catch (error) {
-    console.log(error);
+    res.status(500).json({ success: false, message: "Internal Server Error" });
+  }
+}
+
+export async function getSeriesMovie(req, res) {
+  const { num } = req.params;
+  try {
+    const data = await axios.get(
+      `https://phimapi.com/v1/api/danh-sach/phim-bo?page=${num}`
+    );
+
+    res.status(200).json({ content: data.data.data });
+  } catch (error) {
+    res.status(500).json({ success: false, message: "Internal Server Error" });
+  }
+}
+
+export async function getAnimeMovie(req, res) {
+  const { num } = req.params;
+  try {
+    const data = await axios.get(
+      `https://phimapi.com/v1/api/danh-sach/hoat-hinh?page=${num}`
+    );
+
+    res.status(200).json({ content: data.data.data });
+  } catch (error) {
     res.status(500).json({ success: false, message: "Internal Server Error" });
   }
 }
@@ -43,40 +70,11 @@ export async function getMovieTrailer(req, res) {
 }
 
 export async function getMovieDetails(req, res) {
-  const { id } = req.params;
+  const { name } = req.params;
   try {
-    const data = await fetchFromTMDB(
-      `https://api.themoviedb.org/3/movie/${id}?language=en-US`
-    );
-    res.status(200).json({ success: true, content: data });
-  } catch (error) {
-    if (error.message.includes("404")) {
-      return res.status(404).send(null);
-    }
+    const data = await axios.get(`https://phimapi.com/phim/${name}`);
 
-    res.status(500).json({ success: false, message: "Internal Server Error" });
-  }
-}
-
-export async function getSimilarMovies(req, res) {
-  const { id } = req.params;
-  try {
-    const data = await fetchFromTMDB(
-      `https://api.themoviedb.org/3/movie/${id}/similar?language=en-US&page=1`
-    );
-    res.status(200).json({ success: true, content: data.results });
-  } catch (error) {
-    res.status(500).json({ success: false, message: "Internal Server Error" });
-  }
-}
-
-export async function getRecommendationMovies(req, res) {
-  const { id } = req.params;
-  try {
-    const data = await fetchFromTMDB(
-      `https://api.themoviedb.org/3/movie/${id}/recommendations?language=en-US&page=1`
-    );
-    res.status(200).json({ success: true, content: data.results });
+    res.status(200).json({ content: data.data });
   } catch (error) {
     res.status(500).json({ success: false, message: "Internal Server Error" });
   }
