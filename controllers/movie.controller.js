@@ -1,5 +1,4 @@
 import axios from "axios";
-import { fetchFromTMDB } from "../services/tmdb.service.js";
 
 export async function getTrendingMovie(req, res) {
   const { num } = req.params;
@@ -53,22 +52,6 @@ export async function getAnimeMovie(req, res) {
   }
 }
 
-export async function getMovieTrailer(req, res) {
-  const { id } = req.params;
-  try {
-    const data = await fetchFromTMDB(
-      `https://api.themoviedb.org/3/movie/${id}/videos?language=en-US`
-    );
-    res.json({ success: true, trailer: data.results[0] });
-  } catch (error) {
-    if (error.message.includes("404")) {
-      return res.status(404).send(null);
-    }
-
-    res.status(500).json({ success: false, message: "Internal Server Error" });
-  }
-}
-
 export async function getMovieDetails(req, res) {
   const { name } = req.params;
   try {
@@ -80,14 +63,14 @@ export async function getMovieDetails(req, res) {
   }
 }
 
-export async function getMoviesByCategory(req, res) {
-  const { category } = req.params;
-  try {
-    const data = await fetchFromTMDB(
-      `https://api.themoviedb.org/3/movie/${category}?language=en-US&page=1`
-    );
-    res.status(200).json({ success: true, content: data.results });
-  } catch (error) {
-    res.status(500).json({ success: false, message: "Internal Server Error" });
-  }
-}
+// export async function getMoviesByCategory(req, res) {
+//   const { category } = req.params;
+//   try {
+//     const data = await fetchFromTMDB(
+//       `https://api.themoviedb.org/3/movie/${category}?language=en-US&page=1`
+//     );
+//     res.status(200).json({ success: true, content: data.results });
+//   } catch (error) {
+//     res.status(500).json({ success: false, message: "Internal Server Error" });
+//   }
+// }
