@@ -4,7 +4,7 @@ export async function getTrendingMovie(req, res) {
   const { num } = req.params;
   try {
     const data = await axios.get(
-      `https://phimapi.com/danh-sach/phim-moi-cap-nhat?page=${num}`
+      `https://phimapi.com/danh-sach/phim-moi-cap-nhat-v3?page=${num}`
     );
 
     res.json({ success: true, content: data.data });
